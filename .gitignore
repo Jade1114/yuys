@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .alma-snapshots
+
+# TanStack Router auto-generated
+src/routeTree.gen.ts
