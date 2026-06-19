@@ -86,3 +86,7 @@ export const notes = Object.entries(noteModules)
 export function getNote(slug: string) {
   return notes.find((note) => note.slug === slug)
 }
+
+export function getReadingMinutes(readingTime: string) {
+  return readingTime.match(/\d+/)?.[0] ?? '1'
+}

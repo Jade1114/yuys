@@ -1,15 +1,11 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { MarkdownContent } from '../lib/markdown'
-import { getNote } from '../lib/notes'
+import { getNote, getReadingMinutes } from '../lib/notes'
 import { useI18n } from '../lib/i18n'
 
 export const Route = createFileRoute('/notes/$slug')({
   component: NotePage,
 })
-
-function getReadingMinutes(readingTime: string) {
-  return readingTime.match(/\d+/)?.[0] ?? '1'
-}
 
 function NotePage() {
   const { slug } = Route.useParams()

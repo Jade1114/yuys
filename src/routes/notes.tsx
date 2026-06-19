@@ -1,14 +1,10 @@
 import { Link, Outlet, createFileRoute, useLocation } from '@tanstack/react-router'
 import { useI18n } from '../lib/i18n'
-import { notes } from '../lib/notes'
+import { notes, getReadingMinutes } from '../lib/notes'
 
 export const Route = createFileRoute('/notes')({
   component: NotesPage,
 })
-
-function getReadingMinutes(readingTime: string) {
-  return readingTime.match(/\d+/)?.[0] ?? '1'
-}
 
 function NotesPage() {
   const { t } = useI18n()
