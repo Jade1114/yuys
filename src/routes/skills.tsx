@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useI18n } from '../lib/i18n'
 
 export const Route = createFileRoute('/skills')({
   component: Skills,
@@ -49,32 +50,17 @@ const categories = [
   },
 ]
 
-const learning = [
-  'Java 集合框架深度（HashMap / ConcurrentHashMap / ThreadPool）',
-  'Spring IOC / AOP / Bean 生命周期',
-  'MySQL B+Tree / 事务隔离 / MVCC',
-  'Redis 数据结构与缓存策略',
-  'WebSocket 连接管理与分布式状态同步',
-  'AI Agent Runtime（Tool Calling / Loop / Memory / Trace）',
-]
-
-const levelLabel = (level: number) => {
-  switch (level) {
-    case 1: return 'Beginner'
-    case 2: return 'Competent'
-    case 3: return 'Proficient'
-    case 4: return 'Expert'
-    default: return 'Learning'
-  }
-}
-
 function Skills() {
+  const { t } = useI18n()
+
+  const levelLabel = (level: number) => t.skills.levels[level] ?? t.skills.levels[0]
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
       <div className="mb-12">
-        <h1 className="text-4xl font-bold mb-3">Skills</h1>
+        <h1 className="text-4xl font-bold mb-3">{t.skills.title}</h1>
         <p className="text-base-content/60 text-lg">
-          What I work with — and what I'm digging into next.
+          {t.skills.subtitle}
         </p>
       </div>
 
@@ -108,18 +94,17 @@ function Skills() {
         ))}
       </div>
 
-      {/* Currently Learning */}
       <div className="card bg-base-200 border border-base-300 mt-8">
         <div className="card-body">
           <h2 className="card-title">
             <span className="text-2xl mr-2">📚</span>
-            Currently Deepening
+            {t.skills.currentlyDeepening}
           </h2>
           <p className="text-sm text-base-content/50 mb-4">
-            Preparing for mid-August job applications — P0 priority items
+            {t.skills.learningSubtitle}
           </p>
           <div className="grid gap-2 sm:grid-cols-2">
-            {learning.map((item, i) => (
+            {t.skills.learning.map((item, i) => (
               <div key={i} className="flex items-start gap-2">
                 <span className="text-primary mt-0.5 text-xs shrink-0">▶</span>
                 <span className="text-sm text-base-content/70">{item}</span>

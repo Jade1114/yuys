@@ -1,71 +1,50 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useI18n } from '../lib/i18n'
 
 export const Route = createFileRoute('/about')({
   component: About,
 })
 
 function About() {
+  const { t } = useI18n()
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <div className="mb-12">
-        <h1 className="text-4xl font-bold mb-3">About</h1>
+        <h1 className="text-4xl font-bold mb-3">{t.about.title}</h1>
         <p className="text-base-content/60 text-lg">
-          Who I am, what I'm building, and where I'm headed.
+          {t.about.subtitle}
         </p>
       </div>
 
       <div className="space-y-8">
-        {/* Bio & Education */}
         <div className="card bg-base-200 border border-base-300">
           <div className="card-body">
-            <h2 className="card-title text-xl mb-3">👋 Hey there</h2>
+            <h2 className="card-title text-xl mb-3">{t.about.hey}</h2>
             <div className="space-y-4 text-base-content/70 leading-relaxed">
-              <p>
-                I'm <strong>Yuy</strong> — a developer who leans{' '}
-                <strong>backend-first</strong> (Java · Spring Boot · MySQL) but
-                goes full-stack when the situation calls for it. My projects span from
-                ML-powered scheduling engines to real-time messaging systems — I care
-                about what gets built as much as how it's built.
-              </p>
-              <p>
-                Currently preparing for <strong>mid-August job applications</strong>,
-                depth-first on Java collections, Spring internals, and MySQL indexing &
-                transactions. I also maintain a daily DSA practice and Java interview
-                oral training habit.
-              </p>
+              <p>{t.about.bio1}</p>
+              <p>{t.about.bio2}</p>
             </div>
           </div>
         </div>
 
-        {/* Build Philosophy */}
         <div className="card bg-base-200 border border-base-300">
           <div className="card-body">
-            <h2 className="card-title text-xl mb-3">💭 Build Philosophy</h2>
+            <h2 className="card-title text-xl mb-3">{t.about.philosophyTitle}</h2>
             <ul className="space-y-3 text-base-content/70">
-              <li className="flex gap-3">
-                <span className="text-primary font-bold">01</span>
-                <span><strong>MVP first, iterate fast</strong> — Don't over-design. Get something working, then make it right.</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-primary font-bold">02</span>
-                <span><strong>Understand before optimizing</strong> — A faster wrong answer is still wrong. Know the problem deeply first.</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-primary font-bold">03</span>
-                <span><strong>Architecture is about trade-offs</strong> — Every design decision is a bet. Make it explicit, revisit it often.</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-primary font-bold">04</span>
-                <span><strong>Build what matters</strong> — Not every problem needs a solution. Focus on the ones that do.</span>
-              </li>
+              {t.about.philosophy.map(([title, description], index) => (
+                <li key={title} className="flex gap-3">
+                  <span className="text-primary font-bold">{String(index + 1).padStart(2, '0')}</span>
+                  <span><strong>{title}</strong> — {description}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        {/* Work Style */}
         <div className="card bg-base-200 border border-base-300">
           <div className="card-body">
-            <h2 className="card-title text-xl mb-3">🔧 How I Work</h2>
+            <h2 className="card-title text-xl mb-3">{t.about.workTitle}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
@@ -107,13 +86,11 @@ function About() {
           </div>
         </div>
 
-        {/* Contact & Resume */}
         <div className="card bg-base-200 border border-base-300">
           <div className="card-body text-center">
-            <h2 className="card-title text-xl mb-2 justify-center">📬 Get in Touch</h2>
+            <h2 className="card-title text-xl mb-2 justify-center">{t.about.contactTitle}</h2>
             <p className="text-base-content/50 mb-6">
-              I'm actively looking for backend / full-stack internship opportunities.
-              If you have an opening or just want to chat — feel free to reach out.
+              {t.about.contactText}
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               <a
@@ -154,7 +131,7 @@ function About() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 5a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L8 10.586V7z" clipRule="evenodd" />
                 </svg>
-                Download Resume
+                {t.common.downloadResume}
               </a>
             </div>
           </div>

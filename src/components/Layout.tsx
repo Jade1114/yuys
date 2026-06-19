@@ -1,16 +1,19 @@
 import { Link, useLocation } from '@tanstack/react-router'
 import { useState } from 'react'
-
-const navItems = [
-  { path: '/', label: 'Home' },
-  { path: '/projects', label: 'Projects' },
-  { path: '/skills', label: 'Skills' },
-  { path: '/about', label: 'About' },
-]
+import { useI18n } from '../lib/i18n'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { t, toggleLocale } = useI18n()
+
+  const navItems = [
+    { path: '/', label: t.nav.home },
+    { path: '/projects', label: t.nav.projects },
+    { path: '/notes', label: t.nav.notes },
+    { path: '/skills', label: t.nav.skills },
+    { path: '/about', label: t.nav.about },
+  ]
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/'
@@ -21,14 +24,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-base-100">
-      {/* Navbar */}
       <div className="navbar sticky top-0 z-50 bg-base-100/80 backdrop-blur-md border-b border-base-300">
         <div className="navbar-start">
           <div className="dropdown">
             <button
               className="btn btn-ghost btn-square lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Menu"
+              aria-label={t.nav.menu}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
@@ -68,7 +70,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end gap-1">
+          <button className="btn btn-ghost btn-sm" onClick={toggleLocale} aria-label="Switch language">
+            {t.nav.language}
+          </button>
           <a
             href="https://github.com/Jade1114"
             target="_blank"
@@ -83,15 +88,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      {/* Main content */}
       <main className="flex-1">
         {children}
       </main>
 
-      {/* Footer */}
       <footer className="footer sm:footer-horizontal bg-base-200 border-t border-base-300 px-6 py-6 text-base-content/50 text-sm">
         <div className="flex flex-wrap justify-between items-center w-full max-w-5xl mx-auto">
-          <p>© 2026 Yuy. Built with React + daisyUI.</p>
+          <p>© 2026 Yuy. {t.common.builtWith}</p>
           <div className="flex gap-4">
             <a href="https://github.com/Jade1114" target="_blank" rel="noopener noreferrer" className="link link-hover">
               GitHub
