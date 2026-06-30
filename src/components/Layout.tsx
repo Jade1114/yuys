@@ -1,16 +1,34 @@
 import { Link, useLocation } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useI18n } from '../lib/i18n'
+
+type Theme = 'yuy-light' | 'yuy-dark'
+
+const THEME_STORAGE_KEY = 'yuy-site-theme'
+
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') return 'yuy-light'
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
+  if (storedTheme === 'yuy-light' || storedTheme === 'yuy-dark') return storedTheme
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'yuy-dark' : 'yuy-light'
+}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const { t, toggleLocale } = useI18n()
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme)
+  }, [theme])
 
   const navItems = [
     { path: '/', label: t.nav.home },
     { path: '/projects', label: t.nav.projects },
-    { path: '/notes', label: t.nav.notes },
     { path: '/skills', label: t.nav.skills },
     { path: '/about', label: t.nav.about },
   ]
@@ -21,6 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   const currentPath = location.pathname === '/' ? '' : location.pathname
+  const isDarkTheme = theme === 'yuy-dark'
 
   return (
     <div className="min-h-screen flex flex-col bg-base-100">
@@ -71,6 +90,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </ul>
         </div>
         <div className="navbar-end gap-1">
+          <button
+            className="btn btn-ghost btn-sm"
+            onClick={() => setTheme(isDarkTheme ? 'yuy-light' : 'yuy-dark')}
+            aria-label="Switch color theme"
+          >
+            <span aria-hidden="true">{isDarkTheme ? '☀️' : '🌙'}</span>
+            <span className="hidden sm:inline">{isDarkTheme ? 'Day' : 'Night'}</span>
+          </button>
           <button className="btn btn-ghost btn-sm" onClick={toggleLocale} aria-label="Switch language">
             {t.nav.language}
           </button>

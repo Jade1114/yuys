@@ -45,6 +45,15 @@ function Projects() {
                 {project.description}
               </p>
 
+              <div className="mt-4 rounded-box border border-base-300 bg-base-100/60 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">
+                  {t.projects.proofLabel}
+                </p>
+                <p className="text-sm text-base-content/70 leading-relaxed">
+                  {project.evidence}
+                </p>
+              </div>
+
               <ul className="mt-4 space-y-1.5">
                 {project.highlights.map((highlight, j) => (
                   <li key={j} className="flex items-start gap-2 text-sm text-base-content/60">
